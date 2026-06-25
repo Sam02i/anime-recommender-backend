@@ -14,6 +14,10 @@ min_df=3 ignores words that appear in fewer than 3 documents, helping to reduce 
 print("Training the data it will take some time.....")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_DIR = os.path.join(BASE_DIR, "model")
+os.makedirs(MODEL_DIR, exist_ok=True)
+
 data_path = os.path.join(BASE_DIR, "data", "anime-data-cleaned.csv")
 
 df = pd.read_csv(data_path)
@@ -33,13 +37,13 @@ print("saving all the model components")
 '''We use 'pickle' to serialize (convert Python objects into a byte stream) the trained model components.
 This will allows my Flask API to load them quickly without re-training every time it starts.'''
 
-with open(os.path.join(BASE_DIR,"similarity_matrix.pkl"),"wb") as f:
+with open(os.path.join(MODEL_DIR,"similarity_matrix.pkl"),"wb") as f:
     pickle.dump(similarity_matrix,f)
 
-with open(os.path.join(BASE_DIR,"Tfidf_vectorizer"),"wb") as f:
+with open(os.path.join(MODEL_DIR,"Tfidf_vectorizer.pkl"),"wb") as f:
     pickle.dump(vectorizer,f)
     
-df[["anime_id", "Name", "Genres", "Synopsis", "Score", "Image_URL"]].to_pickle(os.path.join(BASE_DIR,"anime_data.pkl"))
+df[["anime_id", "Name", "Genres", "Synopsis", "Score", "Image_URL"]].to_pickle(os.path.join(MODEL_DIR,"anime_data.pkl"))
 
 print("Done! Model training and saving complete.")
     

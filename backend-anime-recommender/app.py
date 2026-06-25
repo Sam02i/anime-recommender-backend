@@ -1,10 +1,18 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
+import pandas as pd
+import pickle
+import requests
+from fuzzywuzzy import process # Import fuzzywuzzy
+import os
 
 app = Flask(__name__)
 # CORS allows your React frontend to talk to this backend
 CORS(app) 
 
+print("loading Ml model & data....")
+try:
+    with open()
 @app.route('/api/test', methods=['GET'])
 def test():
     # This is the message your frontend is looking for
